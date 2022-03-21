@@ -1,19 +1,19 @@
 #include "ray.hh"
 
 ray::ray()
-  : o{}, dir{} {};
+  : origin{}, direction{} {}
 
-ray::ray(const point3& o, const vec3& dir)
-  : o{o}, dir{dir} {};
+ray::ray(const point3& origin, const vec3& direction)
+  : origin{origin}, direction{direction} {}
 
-point3 ray::origin() const {
-  return o;
+point3 ray::getOrigin() const {
+  return origin;
 }
 
-vec3 ray::direction() const {
-  return dir;
+vec3 ray::getDirection() const {
+  return direction;
 }
 
-point3 ray::at(const double t) const {
-  return o + t * dir;
+point3 ray::at(double t) const {
+  return origin + t * direction;
 }

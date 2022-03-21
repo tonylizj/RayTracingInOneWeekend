@@ -3,8 +3,7 @@
 
 #include <iostream>
 #include "constants.hh"
-#include "vec3.hh"
 
-void writeColour(std::ostream& out, const colour pixelColour);
+void writeColour(std::ostream& out, colour pixelColour);
 
 #endif

@@ -4,20 +4,18 @@
 #include "vec3.hh"
 
 class ray {
-  point3 o;
-  vec3 dir;
+  private:
+    point3 origin;
+    vec3 direction;
 
   public:
+    ray();
+    ray(const point3& origin, const vec3& direction);
 
-  ray();
+    point3 getOrigin() const;
+    vec3 getDirection() const;
 
-  ray(const point3& o, const vec3& dir);
-
-  point3 origin() const;
-
-  vec3 direction() const;
-
-  point3 at(const double t) const;
+    point3 at(double t) const;
 };
 
 #endif

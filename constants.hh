@@ -1,7 +1,11 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include <limits>
 #include "vec3.hh"
+
+const double INFTY = std::numeric_limits<double>::infinity();
+const double PI = 3.1415926535897932385;
 
 const double ASPECTRATIO = 16.0 / 9.0;
 
