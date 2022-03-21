@@ -13,17 +13,10 @@ const int IMAGEWIDTH = 400;
 const int IMAGEHEIGHT = static_cast<int>(IMAGEWIDTH / ASPECTRATIO);
 const int MAXCOLOUR = 255;
 
+const int SAMPLES = 100;
+const int BOUNCEDEPTH = 50;
+
 const colour WHITE = colour{1, 1, 1};
 const colour BLUE = colour{0.5, 0.7, 1};
-
-const double VIEWPORTHEIGHT = 2;
-const double VIEWPORTWIDTH = VIEWPORTHEIGHT * ASPECTRATIO;
-const double FOCALLENGTH = 1;
-
-const point3 ORIGIN = point3{0, 0, 0};
-const vec3 HORIZONTAL = vec3{VIEWPORTWIDTH, 0, 0};
-const vec3 VERTICAL = vec3{0, VIEWPORTHEIGHT, 0};
-const vec3 FOCAL = vec3{0, 0, FOCALLENGTH};
-const point3 LOWERLEFTCORNER = ORIGIN - HORIZONTAL / 2 - VERTICAL / 2 - FOCAL;
 
 #endif

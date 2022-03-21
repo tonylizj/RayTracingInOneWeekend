@@ -1,12 +1,13 @@
 #include "sphere.hh"
 #include "vec3.hh"
 #include "ray.hh"
+#include <memory>
 
 sphere::sphere()
   : hittable{}, center{}, radius{} {}
 
-sphere::sphere(point3 center, double radius)
-  : hittable{}, center{center}, radius{radius} {}
+sphere::sphere(point3 center, double radius, shared_ptr<material> mat)
+  : hittable{}, center{center}, radius{radius}, mat{mat} {}
 
 bool sphere::hit(const ray& ray, double tMin, double tMax, hitRecord& record) const {
   const vec3 CO = ray.getOrigin() - center;
@@ -26,6 +27,8 @@ bool sphere::hit(const ray& ray, double tMin, double tMax, hitRecord& record) co
   record.setT(root);
   record.setPoint(ray.at(record.getT()));
   record.setNormal((record.getPoint() - this->center) / this->radius, ray);
+
+  mat->hit(ray, record);
 
   return true;
 }

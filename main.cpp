@@ -6,6 +6,7 @@
 #include "hittable.hh"
 #include "hittablelist.hh"
 #include "sphere.hh"
+#include "camera.hh"
 
 using std::cout;
 using std::cerr;
@@ -14,26 +15,28 @@ using std::flush;
 
 hittableList createWorld();
 
-colour rayColour(const ray& ray, const hittable& world) {
+colour rayColour(const ray& r, const hittable& world, int depth) {
   hitRecord hit;
 
-  if (world.hit(ray, 0, INFTY, hit)) {
-    return 0.5 * (hit.getNormal() + colour{1, 1, 1});
+  if (depth <= 0) {
+    return colour{0, 0, 0};
   }
 
-  const vec3 unitDirection = unitVector(ray.getDirection());
+  if (world.hit(r, 0.001, INFTY, hit)) {
+    if (hit.getScattered()) {
+      return hit.getAttenuation() * rayColour(hit.getScatteredRay(), world, depth - 1);
+    }
+    return colour{0, 0, 0};
+  }
+
+  const vec3 unitDirection = unitVector(r.getDirection());
   const double scaledRayHeight = 0.5 * (unitDirection.getY() + 1);
   return (1 - scaledRayHeight) * WHITE + scaledRayHeight * BLUE;
 }
 
-ray generateRay(int pixelsFromLeft, int pixelsFromBottom) {
-  const double u = static_cast<double>(pixelsFromLeft) / (IMAGEWIDTH - 1);
-  const double v = static_cast<double>(pixelsFromBottom) / (IMAGEHEIGHT - 1);
-  return ray{ORIGIN, (LOWERLEFTCORNER + u * HORIZONTAL + v * VERTICAL) - ORIGIN};
-}
-
 int main(void) {
-  hittableList world = createWorld();
+  const hittableList world = createWorld();
+  const camera cam;
 
   cout << "P3\n" << IMAGEWIDTH << ' ' << IMAGEHEIGHT << '\n' << MAXCOLOUR << '\n';
 
@@ -41,7 +44,13 @@ int main(void) {
     cerr << "\rScanlines remaining: " << j + 1 << ' ' << flush;
 
     for (int i = 0; i < IMAGEWIDTH; ++i) {
-      const colour pixelColour = rayColour(generateRay(i, j), world);
+      colour pixelColour{0, 0, 0};
+
+      for (int s = 0; s < SAMPLES; ++s) {
+        const ray ray = cam.getRay(i, j);
+        pixelColour += rayColour(ray, world, BOUNCEDEPTH);
+      }
+
       writeColour(cout, pixelColour);
     }
   }

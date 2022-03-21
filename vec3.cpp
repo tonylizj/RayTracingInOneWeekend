@@ -3,6 +3,8 @@
 using std::sqrt;
 using std::ostream;
 
+double randomDouble(double minVal, double maxVal);
+
 vec3::vec3()
   : e{0, 0, 0} {}
 
@@ -93,6 +95,11 @@ double vec3::lengthSquared() const {
   return e[0] * e[0] + e[1] * e[1] + e[2] * e[2];
 }
 
+bool vec3::nearZero() const {
+  const double s = 1e-8;
+  return (fabs(e[0]) < s) && (fabs(e[1]) < s) && (fabs(e[2]) < s);
+}
+
 ostream& operator<<(ostream& os, const vec3& v) {
   return os << v.e[0] << ' ' << v.e[1] << ' ' << v.e[2];
 }
@@ -115,4 +122,25 @@ vec3 cross(const vec3& v1, const vec3& v2) {
 
 vec3 unitVector(const vec3& v) {
   return v / v.length();
+}
+
+vec3 randomVector(double minVal, double maxVal) {
+  return vec3{randomDouble(minVal, maxVal), randomDouble(minVal, maxVal), randomDouble(minVal, maxVal)};
+}
+
+vec3 randomInUnitSphere() {
+  while (true) {
+    vec3 v = randomVector(-1, 1);
+    if (v.lengthSquared() < 1) {
+      return v;
+    }
+  }
+}
+
+vec3 randomUnitVector() {
+  return unitVector(randomInUnitSphere());
+}
+
+vec3 reflect(const vec3& v, const vec3& normal) {
+  return v - 2 * dot(v, normal) * normal;
 }
