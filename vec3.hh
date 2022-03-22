@@ -45,9 +45,13 @@ vec3 cross(const vec3& v1, const vec3& v2);
 
 vec3 unitVector(const vec3& v);
 
+vec3 randomInUnitSphere();
+
 vec3 randomUnitVector();
 
 vec3 reflect(const vec3& v, const vec3& normal);
+
+vec3 refract(const vec3& uv, const vec3& normal, double refractionRatio);
 
 using point3 = vec3;
 using colour = vec3;

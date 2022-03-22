@@ -7,9 +7,10 @@
 class metal : public material {
   private:
     colour albedo;
+    double fuzz;
 
   public:
-    metal(colour albedo);
+    metal(colour albedo, double fuzz);
 
     virtual void hit(const ray& r, hitRecord& rec) const override;
 };

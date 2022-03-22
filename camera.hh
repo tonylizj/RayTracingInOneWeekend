@@ -12,7 +12,7 @@ class camera {
     vec3 vertical;
 
   public:
-    camera();
+    camera(const point3& position, const point3& target, const vec3& up, double vFOV, double aspectRatio);
 
     ray getRay(double pixelsFromLeft, double pixelsFromBottom) const;
 };

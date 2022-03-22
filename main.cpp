@@ -14,6 +14,7 @@ using std::endl;
 using std::flush;
 
 hittableList createWorld();
+double degToRad(double deg);
 
 colour rayColour(const ray& r, const hittable& world, int depth) {
   hitRecord hit;
@@ -36,7 +37,7 @@ colour rayColour(const ray& r, const hittable& world, int depth) {
 
 int main(void) {
   const hittableList world = createWorld();
-  const camera cam;
+  const camera cam{point3{-2, 2, 1}, point3{0, 0, -1}, vec3{0, 1, 0}, degToRad(30), ASPECTRATIO};
 
   cout << "P3\n" << IMAGEWIDTH << ' ' << IMAGEHEIGHT << '\n' << MAXCOLOUR << '\n';
 

@@ -144,3 +144,10 @@ vec3 randomUnitVector() {
 vec3 reflect(const vec3& v, const vec3& normal) {
   return v - 2 * dot(v, normal) * normal;
 }
+
+vec3 refract(const vec3& uv, const vec3& normal, double refractionRatio) {
+  const double cosTheta = fmin(dot(-uv, normal), 1);
+  const vec3 perpendicular = refractionRatio * (uv + cosTheta * normal);
+  const vec3 parallel = -sqrt(fabs(1 - perpendicular.lengthSquared())) * normal;
+  return perpendicular + parallel;
+}

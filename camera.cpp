@@ -3,17 +3,18 @@
 
 double randomDouble();
 
-camera::camera() {
-  const double aspectRatio = ASPECTRATIO;
-  const double viewportHeight = 2;
+camera::camera(const point3& position, const point3& target, const vec3& up, double vFOV, double aspectRatio) {
+  const double viewportHeight = 2 * tan(vFOV / 2);
   const double viewportWidth = viewportHeight * aspectRatio;
-  const double focalLength = 1;
 
-  origin = point3{0, 0, 0};
-  horizontal = vec3{viewportWidth, 0, 0};
-  vertical = vec3{0, viewportHeight, 0};
-  const vec3 focal = vec3{0, 0, focalLength};
-  lowerLeftCorner = origin - horizontal / 2 - vertical / 2 - focal;
+  const vec3 focalVec = unitVector(position - target);
+  const vec3 horizontalVec = unitVector(cross(up, focalVec));
+  const vec3 verticalVec = unitVector(cross(focalVec, horizontalVec));
+
+  origin = position;
+  horizontal = viewportWidth * horizontalVec;
+  vertical = viewportHeight * verticalVec;
+  lowerLeftCorner = origin - horizontal / 2 - vertical / 2 - focalVec;
 }
 
 ray camera::getRay(double pixelsFromLeft, double pixelsFromBottom) const {
