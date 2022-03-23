@@ -137,6 +137,15 @@ vec3 randomInUnitSphere() {
   }
 }
 
+vec3 randomInUnitDisc() {
+  while (true) {
+    vec3 v = vec3{randomDouble(-1, 1), randomDouble(-1, 1), 0};
+    if (v.lengthSquared() < 1) {
+      return v;
+    }
+  }
+}
+
 vec3 randomUnitVector() {
   return unitVector(randomInUnitSphere());
 }

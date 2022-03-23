@@ -6,4 +6,8 @@
 
 void writeColour(std::ostream& out, colour pixelColour);
 
+colour randomColour();
+
+colour randomColour(double minVal, double maxVal);
+
 #endif

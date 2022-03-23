@@ -14,6 +14,7 @@ using std::endl;
 using std::flush;
 
 hittableList createWorld();
+hittableList createBookFinalWorld();
 double degToRad(double deg);
 
 colour rayColour(const ray& r, const hittable& world, int depth) {
@@ -36,8 +37,14 @@ colour rayColour(const ray& r, const hittable& world, int depth) {
 }
 
 int main(void) {
-  const hittableList world = createWorld();
-  const camera cam{point3{-2, 2, 1}, point3{0, 0, -1}, vec3{0, 1, 0}, degToRad(30), ASPECTRATIO};
+  const hittableList world = createBookFinalWorld();
+
+  const point3 position = point3{13, 2, 3};
+  const point3 target = point3{0, 0, 0};
+  const double vFOV = 20;
+  const double aperture = 0.1;
+  const double focalDistance = 10;
+  const camera cam{position, target, vec3{0, 1, 0}, degToRad(vFOV), ASPECTRATIO, aperture, focalDistance};
 
   cout << "P3\n" << IMAGEWIDTH << ' ' << IMAGEHEIGHT << '\n' << MAXCOLOUR << '\n';
 

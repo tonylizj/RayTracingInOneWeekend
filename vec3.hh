@@ -47,6 +47,8 @@ vec3 unitVector(const vec3& v);
 
 vec3 randomInUnitSphere();
 
+vec3 randomInUnitDisc();
+
 vec3 randomUnitVector();
 
 vec3 reflect(const vec3& v, const vec3& normal);
